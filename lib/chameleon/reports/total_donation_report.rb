@@ -1,16 +1,14 @@
-require 'writeexcel'
+require 'rubyXL'
 require 'chameleon/reports/abstract_report'
 
 class TotalDonationReport < AbstractReport
   def self.generate!(donor_infos, tiers, outfile)
-    workbook = WriteExcel.new(outfile)
+    workbook = RubyXL::Workbook.new
 
-    all_donor_sheet = workbook.add_worksheet('All Donors')
+    all_donor_sheet = workbook.worksheets.first
+    all_donor_sheet.sheet_name = 'All Donors'
 
-    header_format = workbook.add_format
-    header_format.set_bold
-
-    write_headers(all_donor_sheet, header_format)
+    write_headers(all_donor_sheet)
 
     donor_infos.sort_by!(&:total)
 
@@ -21,7 +19,7 @@ class TotalDonationReport < AbstractReport
     tiers.each do |range|
       tier_sheet = workbook.add_worksheet("$#{range.first} - $#{range.last}")
 
-      write_headers(tier_sheet, header_format)
+      write_headers(tier_sheet)
 
       i = 1
       donor_infos.each do |donor|
@@ -32,22 +30,24 @@ class TotalDonationReport < AbstractReport
       end
     end
 
-    workbook.close
+    workbook.write(outfile)
   end
 
   private
 
   def self.write_donor(sheet, donor_info, index)
-    sheet.write(index, 0, donor_info.name)
-    sheet.write(index, 1, donor_info.first_name)
-    sheet.write(index, 2, donor_info.last_name)
-    sheet.write(index, 3, donor_info.total)
+    sheet.add_cell(index, 0, donor_info.name.strip)
+    sheet.add_cell(index, 1, donor_info.first_name)
+    sheet.add_cell(index, 2, donor_info.last_name)
+    sheet.add_cell(index, 3, donor_info.total)
   end
 
-  def self.write_headers(worksheet, format)
-    worksheet.write(0, 0, 'Full Name', format)
-    worksheet.write(0, 1, 'First Name', format)
-    worksheet.write(0, 2, 'Last Name', format)
-    worksheet.write(0, 3, 'Amount', format)
+  def self.write_headers(worksheet)
+    worksheet.change_row_bold(0, true)
+
+    worksheet.add_cell(0, 0, 'Full Name')
+    worksheet.add_cell(0, 1, 'First Name')
+    worksheet.add_cell(0, 2, 'Last Name')
+    worksheet.add_cell(0, 3, 'Amount')
   end
 end

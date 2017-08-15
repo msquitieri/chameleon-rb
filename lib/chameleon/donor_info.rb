@@ -4,12 +4,15 @@ class DonorInfo
   KILL_WORDS = %w(Mr. Mrs. Ms.)
 
   def initialize(name, total)
-    @name = name
+    unless name.nil?
+      @name = name.strip
+    end
+
     @total = total
   end
 
   def cleaned_name
-    cleaned = name
+    cleaned = name.dup
 
     KILL_WORDS.each { |kill_word| cleaned.gsub!(kill_word, '') }
 
