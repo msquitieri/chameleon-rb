@@ -15,6 +15,14 @@ class Chameleon
 
     donor_information.compact!
 
-    TotalDonationReport.generate!(donor_information, [10..50, 51..100, 300..500, 500..5000], "donor-report.xls")
+    tiers = [
+        10..99,
+        100..199,
+        200..499,
+        500..999,
+        1000...10000
+    ]
+
+    TotalDonationReport.generate!(donor_information, tiers, "donor-report.xls")
   end
 end
