@@ -3,6 +3,7 @@ PATH
   specs:
     chameleon-rb (0.0.1)
       roo (~> 2.7.0)
+      writeexcel (~> 1.0)
 
 GEM
   remote: https://rubygems.org/
@@ -32,6 +33,7 @@ GEM
       rspec-support (~> 3.6.0)
     rspec-support (3.6.0)
     rubyzip (1.2.1)
+    writeexcel (1.0.5)
 
 PLATFORMS
   ruby

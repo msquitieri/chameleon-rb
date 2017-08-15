@@ -15,4 +15,25 @@ class DonorInfo
 
     cleaned.strip
   end
+
+  def first_name
+    name_arr.first unless name_arr.nil?
+  end
+
+  def last_name
+    name_arr.last unless name_arr.nil?
+  end
+
+  def in_tier?(range)
+    range.include?(total)
+  end
+
+  private
+
+  def name_arr
+    cleaned = cleaned_name
+    unless cleaned.nil?
+      cleaned.split(' ')
+    end
+  end
 end
