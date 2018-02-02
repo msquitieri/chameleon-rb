@@ -1,5 +1,9 @@
 class DonorReceiptController < ApplicationController
   def receipt
+    @donor_receipt = DonationReceipt.new
+    @donor_receipt.name = "Michael Squitieri"
+    @donor_receipt.amount = 125.25
+
     respond_to do |format|
       format.html
       format.pdf do
