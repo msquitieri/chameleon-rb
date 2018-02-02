@@ -50,6 +50,7 @@ class TotalDonationReport < AbstractReport
     worksheet.change_column_width(0, MAX_COLUMN_WIDTH)
     worksheet.change_column_width(1, MAX_COLUMN_WIDTH / 2)
     worksheet.change_column_width(2, MAX_COLUMN_WIDTH / 2)
+    worksheet.change_column_width(3, MAX_COLUMN_WIDTH / 2)
 
     (0..3).to_a.each do |index|
       worksheet.change_column_font_name(index, DEFAULT_FONT_NAME)
