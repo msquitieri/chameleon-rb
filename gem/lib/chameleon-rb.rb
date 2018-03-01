@@ -15,7 +15,7 @@ class Chameleon
     1000...10000
   ]
 
-  def self.parse_kickstarter(directory_path)
+  def self.kickstarter_donation_report(directory_path)
     donors = []
     Dir.foreach(directory_path) do |item|
       next if item == '.' || item == '..'
