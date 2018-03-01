@@ -1,14 +1,15 @@
 class DonorInfo
-  attr_reader :name, :total
+  attr_reader :name, :total, :email
 
   KILL_WORDS = %w(Mr. Mrs. Ms.)
 
-  def initialize(name, total)
+  def initialize(name, email, total)
     unless name.nil?
       @name = name.strip
     end
 
     @total = total
+    @email = email
   end
 
   def cleaned_name

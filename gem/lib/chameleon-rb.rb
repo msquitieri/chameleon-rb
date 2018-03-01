@@ -3,8 +3,30 @@ require 'open-uri'
 require 'chameleon/models/donor_info'
 require 'chameleon/reports/total_donation_report'
 require 'chameleon/parsers/quickbooks_parser'
+require 'chameleon/parsers/kickstarter_parser'
 
 class Chameleon
+
+  TIERS = [
+    10..99,
+    100..199,
+    200..499,
+    500..999,
+    1000...10000
+  ]
+
+  def self.parse_kickstarter(directory_path)
+    donors = []
+    Dir.foreach(directory_path) do |item|
+      next if item == '.' || item == '..'
+
+      donors << KickstarterParser.parse("#{directory_path}/#{item}")
+    end
+
+    donors.flatten!
+
+    TotalDonationReport.generate!(donors, TIERS, "kickstarter-report.xlsx")
+  end
 
   def self.donation_letters(excel_file_path)
     donor_information = QuickbooksParser.parse(excel_file_path)
@@ -20,15 +42,7 @@ class Chameleon
   def self.total_donation_report(excel_file_path)
     donor_information = QuickbooksParser.parse(excel_file_path)
 
-    tiers = [
-        10..99,
-        100..199,
-        200..499,
-        500..999,
-        1000...10000
-    ]
-
-    TotalDonationReport.generate!(donor_information, tiers, "donor-report.xlsx")
+    TotalDonationReport.generate!(donor_information, TIERS, "donor-report.xlsx")
   end
 
   private

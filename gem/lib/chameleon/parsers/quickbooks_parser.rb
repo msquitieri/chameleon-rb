@@ -10,7 +10,7 @@ class QuickbooksParser
       has_cells = !!(row && row.cells && row.cells.first && row.cells.last)
 
       if has_cells && !row.cells.first.value.index('Total for').nil?
-        DonorInfo.new(row.cells.first.value.gsub('Total for ', ''), row.cells.last.value)
+        DonorInfo.new(row.cells.first.value.gsub('Total for ', ''), nil, row.cells.last.value)
       end
     end
 

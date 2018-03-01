@@ -43,7 +43,8 @@ class TotalDonationReport < AbstractReport
     sheet.add_cell(index, 0, donor_info.name.strip)
     sheet.add_cell(index, 1, donor_info.first_name)
     sheet.add_cell(index, 2, donor_info.last_name)
-    sheet.add_cell(index, 3, donor_info.total).set_number_format('$###,##0.00')
+    sheet.add_cell(index, 3, donor_info.email)
+    sheet.add_cell(index, 4, donor_info.total).set_number_format('$###,##0.00')
   end
 
   def self.write_headers(worksheet)
@@ -51,8 +52,9 @@ class TotalDonationReport < AbstractReport
     worksheet.change_column_width(1, MAX_COLUMN_WIDTH / 2)
     worksheet.change_column_width(2, MAX_COLUMN_WIDTH / 2)
     worksheet.change_column_width(3, MAX_COLUMN_WIDTH / 2)
+    worksheet.change_column_width(4, MAX_COLUMN_WIDTH / 2)
 
-    (0..3).to_a.each do |index|
+    (0..4).to_a.each do |index|
       worksheet.change_column_font_name(index, DEFAULT_FONT_NAME)
       worksheet.change_column_font_size(index, DEFAULT_FONT_SIZE)
     end
@@ -64,6 +66,7 @@ class TotalDonationReport < AbstractReport
     worksheet.add_cell(0, 0, 'Full Name')
     worksheet.add_cell(0, 1, 'First Name')
     worksheet.add_cell(0, 2, 'Last Name')
-    worksheet.add_cell(0, 3, 'Amount')
+    worksheet.add_cell(0, 3, 'Email')
+    worksheet.add_cell(0, 4, 'Amount')
   end
 end
